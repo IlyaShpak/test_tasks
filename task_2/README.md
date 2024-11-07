@@ -3,7 +3,7 @@ Install
 
     # clone the repository
     $ git clone https://github.com/IlyaShpak/test_tasks.git
-    $ cd test_tasks
+    $ cd test_tasks/task_2
 Edit connection params in __init__.py
 
 
