@@ -86,19 +86,6 @@ def logout():
     return redirect(url_for('hello_world'))
 
 
-@app.route('/profile', methods=['GET', 'POST'])
-@login_required
-def profile():
-    username = current_user.login
-    email = current_user.email
-    pet_name = current_user.pet_name
-    number_of_calculations = current_user.number_of_calculations
-    if pet_name is None:
-        pet_name = ''
-    return render_template('profile.html', username=username, email=email,
-                           pet_name=pet_name, number_of_calculations=number_of_calculations)
-
-
 @app.route('/load', methods=['GET'])
 @login_required
 def load_data():
