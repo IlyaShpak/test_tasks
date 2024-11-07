@@ -182,52 +182,54 @@
     };
 
     function displayResults(data) {
-        const resultsList = document.getElementById("resultsList");
-        resultsList.innerHTML = "";  // Очищаем предыдущие результаты
+    const resultsList = document.getElementById("resultsList");
+    resultsList.innerHTML = "";  // Очищаем предыдущие результаты
 
-        // Проверяем, что первый элемент массива содержит свойство results
-        if (Array.isArray(data) && data.length > 0 && data[0].results) {
-            // Создаём таблицу
-            const table = document.createElement("table");
-            table.classList.add("result-table");
+    // Проверяем, что первый элемент массива содержит свойство results
+    if (Array.isArray(data) && data.length > 0 && data[0].results) {
+        // Создаём таблицу
+        const table = document.createElement("table");
+        table.classList.add("result-table");
 
-            // Создаем заголовки таблицы
-            const thead = document.createElement("thead");
-            thead.innerHTML = `
-                <tr>
-                    <th>Text</th>
-                    <th>Similarity</th>
-                </tr>
-            `;
-            table.appendChild(thead);
+        // Создаем заголовки таблицы
+        const thead = document.createElement("thead");
+        thead.innerHTML = `
+            <tr>
+                <th>Text</th>
+                <th>Similarity</th>
+            </tr>
+        `;
+        table.appendChild(thead);
 
-            // Создаем тело таблицы и добавляем строки с результатами
-            const tbody = document.createElement("tbody");
+        // Создаем тело таблицы и добавляем строки с результатами
+        const tbody = document.createElement("tbody");
 
-            data[0].results.forEach(item => {
-                const row = document.createElement("tr");
+        data[0].results.forEach(item => {
+            const row = document.createElement("tr");
 
-                const textCell = document.createElement("td");
-                textCell.textContent = item.text;
-                row.appendChild(textCell);
+            const textCell = document.createElement("td");
+            textCell.textContent = item.text;
+            row.appendChild(textCell);
 
-                const similarityCell = document.createElement("td");
-                similarityCell.textContent = item.similarity.toFixed(4);
-                row.appendChild(similarityCell);
+            const similarityCell = document.createElement("td");
+            const similarity = parseFloat(item.similarity);  // Преобразуем в число
+            similarityCell.textContent = isNaN(similarity) ? 'N/A' : similarity.toFixed(4);  // Проверяем, число ли это
+            row.appendChild(similarityCell);
 
-                tbody.appendChild(row);
-            });
+            tbody.appendChild(row);
+        });
 
-            table.appendChild(tbody);
+        table.appendChild(tbody);
 
-            // Добавляем таблицу на страницу
-            resultsList.appendChild(table);
-        } else {
-            const li = document.createElement("div");
-            li.textContent = 'No results found or an error occurred';
-            resultsList.appendChild(li);
-        }
+        // Добавляем таблицу на страницу
+        resultsList.appendChild(table);
+    } else {
+        const li = document.createElement("div");
+        li.textContent = 'No results found or an error occurred';
+        resultsList.appendChild(li);
     }
+}
+
 </script>
 </body>
 </html>

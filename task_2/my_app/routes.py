@@ -124,16 +124,16 @@ def search_query_endpoint():
         query_embedding = query_embedding.tolist()
         session = sessionmaker(bind=db.engine)()
 
-        results = []
         data_entries = session.query(Data).all()
-
+        seen_texts = set()
+        results = []
         for entry in data_entries:
-            db_embedding = np.frombuffer(entry.embedding, dtype=np.float32)
-            similarity = model.similarity(query_embedding, db_embedding).tolist()[0]
-            results.append({
-                'text': entry.text,
-                'similarity': similarity[0]
-            })
+            text = entry.text
+            if text not in seen_texts:
+                similarity = \
+                model.similarity(query_embedding, np.frombuffer(entry.embedding, dtype=np.float32)).tolist()[0]
+                results.append({'text': text, 'similarity': similarity})
+                seen_texts.add(text)
 
         results.sort(key=lambda x: x['similarity'], reverse=True)
         return jsonify({'results': results[:5]}, 200)
