@@ -32,4 +32,9 @@ Run
 
     $ flask --app my_app run
 
-Open http://127.0.0.1:5000 in a browser.
+Use
+---
+    $ Open http://127.0.0.1:5000 in a browser.
+    $ Create account
+    $ Upload your data
+    $ Test search
